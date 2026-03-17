@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ViceLab — Festival Safety Ecosystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0b0d;
+      --bg-card:   #111318;
+      --bg-card2:  #13161c;
+      --border:    rgba(255,255,255,0.07);
+      --border-hi: rgba(255,255,255,0.14);
+      --text:      #e8eaf0;
+      --text-muted:#7a8099;
+      --text-dim:  #4a5070;
+      --accent:    #c6f135;       /* sharp chartreuse — research instrument meets festival */
+      --accent-lo: rgba(198,241,53,0.08);
+      --accent-glow: rgba(198,241,53,0.18);
+      --red:       #ff4d6d;
+      --blue:      #4da6ff;
+      --amber:     #ffb84d;
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --max:       1140px;
+      --radius:    10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout helpers ───────────────────────────────────────── */
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section { position: relative; }
+
+    /* ── Nav ──────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,11,13,0.85);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    #hero {
+      padding: 160px 0 100px;
+      overflow: hidden;
+    }
+
+    /* Background glow blob */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(198,241,53,0.055) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: var(--font-head);
+      font-size: clamp(38px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      max-width: 800px;
+      margin-bottom: 28px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-lo);
+      border: 1px solid rgba(198,241,53,0.2);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border-radius: 20px;
+    }
+
+    .status-pill::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── Ecosystem diagram ────────────────────────────────────── */
+    .eco-diagram {
+      margin-top: 72px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      max-width: 760px;
+    }
+
+    .eco-node {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      position: relative;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .eco-node:hover {
+      border-color: var(--border-hi);
+      background: var(--bg-card2);
+    }
+
+    .eco-node-label {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .eco-node-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .eco-node.vicelab .eco-node-label { color: var(--accent); }
+    .eco-node.cooked .eco-node-label  { color: var(--blue); }
+    .eco-node.vibe .eco-node-label    { color: var(--amber); }
+
+    .eco-arrow {
+      width: 40px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 18px;
+      padding: 0 4px;
+    }
+
+    /* ── Section headings ─────────────────────────────────────── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    /* ── Divider ──────────────────────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 80px 0;
+    }
+
+    /* ── The Challenge ────────────────────────────────────────── */
+    #challenge { padding: 80px 0; }
+
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .body-text {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .body-text p + p { margin-top: 18px; }
+
+    .challenge-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.heat  { background: rgba(255,77,109,0.1); }
+    .stat-icon.crowd { background: rgba(77,166,255,0.1); }
+    .stat-icon.time  { background: rgba(255,184,77,0.1); }
+
+    .stat-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ── Ecosystem section ────────────────────────────────────── */
+    #ecosystem { padding: 80px 0; }
+
+    .ecosystem-intro {
+      font-size: 17px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .eco-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .eco-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .eco-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .eco-card.card-vicelab::before { background: var(--accent); }
+    .eco-card.card-cooked::before  { background: var(--blue); }
+    .eco-card.card-vibe::before    { background: var(--amber); }
+
+    .eco-card:hover { border-color: var(--border-hi); }
+
+    .card-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .card-vicelab .card-title { color: var(--accent); }
+    .card-cooked  .card-title { color: var(--blue); }
+    .card-vibe    .card-title { color: var(--amber); }
+
+    .card-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .ecosystem-close {
+      font-size: 16px;
+      color: var(--text-muted);
+      font-style: italic;
+      font-weight: 300;
+      border-left: 2px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    /* ── Why It Matters ───────────────────────────────────────── */
+    #why { padding: 80px 0; }
+
+    .why-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 56px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -120px; right: -120px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(198,241,53,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .why-inner h2 { max-width: 520px; }
+
+    .why-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 36px;
+    }
+
+    .why-body p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .why-body p + p { margin-top: 18px; }
+
+    .why-highlight {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.55;
+      font-family: var(--font-head);
+    }
+
+    /* ── Dev Status ───────────────────────────────────────────── */
+    #status { padding: 80px 0 120px; }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .status-text .body-text { margin-bottom: 32px; }
+
+    .status-goal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-top: 24px;
+    }
+
+    .status-goal p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .status-goal strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .signature-block {
+      background: linear-gradient(135deg, rgba(198,241,53,0.04) 0%, rgba(77,166,255,0.03) 100%);
+      border: 1px solid var(--border-hi);
+      border-radius: 12px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+    }
+
+    .sig-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .sig-text {
+      font-family: var(--font-head);
+      font-size: clamp(17px, 2.2vw, 21px);
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--text);
+    }
+
+    .sig-text em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .sig-footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ── Stay in the Loop ─────────────────────────────────────── */
+    /* Scoped magenta tokens — do not affect any other section    */
+    #loop {
+      padding: 80px 0;
+      --magenta:      #e43cff;
+      --magenta-lo:   rgba(228, 60, 255, 0.08);
+      --magenta-border: rgba(228, 60, 255, 0.22);
+      --magenta-glow: rgba(228, 60, 255, 0.15);
+    }
+
+    .loop-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .loop-left .section-label {
+      margin-bottom: 14px;
+      color: var(--magenta);            /* section label in magenta instead of global dim */
+    }
+
+    .loop-left h2 { margin-bottom: 20px; }
+
+    .loop-intro {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 440px;
+    }
+
+    .loop-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .loop-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.25s, background 0.25s, transform 0.25s;
+      cursor: pointer;
+    }
+
+    .loop-btn:hover {
+      border-color: var(--magenta-border);  /* magenta border on hover */
+      background: var(--bg-card2);
+      transform: translateX(4px);
+    }
+
+    .loop-btn-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: background 0.25s, border-color 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+
+    .loop-btn:hover .loop-btn-icon {
+      background: var(--magenta-lo);           /* replaces green accent-lo */
+      border-color: var(--magenta-border);     /* replaces green border */
+      color: var(--magenta);
+      box-shadow: 0 0 10px var(--magenta-glow);
+    }
+
+    .loop-btn-text {
+      flex: 1;
+    }
+
+    .loop-btn-label {
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .loop-btn-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .loop-btn-arrow {
+      font-size: 14px;
+      color: var(--text-dim);
+      transition: color 0.25s, transform 0.25s;
+    }
+
+    .loop-btn:hover .loop-btn-arrow {
+      color: var(--magenta);               /* replaces green var(--accent) */
+      transform: translateX(3px);
+    }
+
+    .loop-closing {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(228, 60, 255, 0.15);  /* soft magenta rule instead of default border */
+      font-size: 13px;
+      font-style: italic;
+      color: var(--text-dim);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .loop-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .loop-intro { max-width: 100%; }
+    }
+
+    /* ── Animations ───────────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .challenge-grid,
+      .why-body,
+      .status-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-inner {
+        padding: 36px 28px;
+      }
+
+      .eco-diagram {
+        flex-direction: column;
+        gap: 4px;
+        max-width: 340px;
+      }
+
+      .eco-arrow {
+        transform: rotate(90deg);
+        width: auto;
+        height: 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 0 20px; }
+      .nav-inner  { padding: 0 20px; }
+      #hero { padding: 120px 0 72px; }
+      .section-divider { margin: 56px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Vice<span>Lab</span></a>
+      <span class="nav-tag">In Development</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-eyebrow">Festival Safety Ecosystem</div>
+      <h1>Festival safety systems<br>for <em>modern events.</em></h1>
+      <p class="hero-sub">
+        ViceLab, Cooked Pilot, and VibeGuard form a connected ecosystem designed to support safer festival environments through research, attendee tools, and organiser intelligence.
+      </p>
+      <div class="status-pill">Currently in development</div>
+
+      <!-- Diagram -->
+      <div class="eco-diagram">
+        <div class="eco-node vicelab fade-up">
+          <div class="eco-node-label">ViceLab</div>
+          <div class="eco-node-desc">Research &amp; knowledge</div>
+        </div>
+        <div class="eco-arrow">→</div>
+        <div class="eco-node cooked fade-up">
+          <div class="eco-node-label">Cooked Pilot</div>
+          <div class="eco-node-desc">Attendee safety tools</div>
+        </div>
+        <div class="eco-arrow">→</div>
+        <div class="eco-node vibe fade-up">
+          <div class="eco-node-label">VibeGuard</div>
+          <div class="eco-node-desc">Organiser intelligence</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="section-divider"></div></div>
+
+  <!-- THE CHALLENGE -->
+  <section id="challenge">
+    <div class="container">
+      <div class="challenge-grid">
+        <div>
+          <div class="section-label">01 — Context</div>
+          <h2>The Challenge</h2>
+          <div class="body-text">
+            <p>Large festivals bring together thousands of people in high-energy environments where heat, crowd density, fatigue, and substance use can intersect.</p>
+            <p>While organisers work hard to manage safety, many risks emerge dynamically between attendees, conditions, and timing.</p>
+            <p>Supporting safer decisions requires better information, clearer signals, and tools designed for real festival environments.</p>
+          </div>
+        </div>
+        <div class="challenge-stats">
+          <div class="stat-card fade-up">
+            <div class="stat-icon heat">🌡</div>
+            <div class="stat-text">Heat, crowd density, and fatigue create compounding risk factors that evolve throughout an event.</div>
+          </div>
+          <div class="stat-card fade-up">
+            <div class="stat-icon crowd">⚡</div>
+            <div class="stat-text">Risks often emerge dynamically — between people, conditions, and timing — not just from single causes.</div>
+          </div>
+          <div class="stat-card fade-up">
+            <div class="stat-icon time">🛡</div>
+            <div class="stat-text">Better information and clearer signals give attendees and organisers more time to act safely.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="section-divider"></div></div>
+
+  <!-- THE ECOSYSTEM -->
+  <section id="ecosystem">
+    <div class="container">
+      <div class="section-label">02 — Architecture</div>
+      <h2>The Ecosystem</h2>
+      <p class="ecosystem-intro">The project is structured as three connected layers.</p>
+      <div class="cards-grid">
+        <div class="eco-card card-vicelab fade-up">
+          <div class="card-num">Layer 01</div>
+          <div class="card-title">ViceLab</div>
+          <div class="card-body">Research and knowledge development focused on harm-reduction science, interaction awareness, and evidence-based safety communication.</div>
+        </div>
+        <div class="eco-card card-cooked fade-up">
+          <div class="card-num">Layer 02</div>
+          <div class="card-title">Cooked Pilot</div>
+          <div class="card-body">Attendee-focused safety tools designed for festival environments, helping people stay aware of conditions, interactions, and support options.</div>
+        </div>
+        <div class="eco-card card-vibe fade-up">
+          <div class="card-num">Layer 03</div>
+          <div class="card-title">VibeGuard</div>
+          <div class="card-body">Organiser safety intelligence designed to support event teams with insights, compliance awareness, and emerging risk signals.</div>
+        </div>
+      </div>
+      <p class="ecosystem-close">Together these layers connect research, technology, and event operations into a single safety ecosystem.</p>
+    </div>
+  </section>
+
+  <div class="container"><div class="section-divider"></div></div>
+
+  <!-- WHY IT MATTERS -->
+  <section id="why">
+    <div class="container">
+      <div class="why-inner">
+        <div class="section-label">03 — Purpose</div>
+        <h2>Why This Matters</h2>
+        <div class="why-body">
+          <div class="body-text">
+            <p>Festivals are powerful cultural spaces. They bring people together to share music, art, exploration, and moments that can stay with us for a lifetime.</p>
+            <p>Supporting safer environments protects both the experience and the community that makes these events possible.</p>
+          </div>
+          <div>
+            <p class="why-highlight">By combining research, attendee awareness tools, and organiser intelligence, this ecosystem aims to strengthen the foundations that keep festival culture thriving.</p>
+            <div style="margin-top: 28px;">
+              <p class="body-text">Because the best nights should end with great stories, not unnecessary risks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="section-divider"></div></div>
+
+  <!-- STAY IN THE LOOP -->
+  <section id="loop">
+    <div class="container">
+      <div class="loop-inner">
+
+        <div class="loop-left fade-up">
+          <div class="section-label">04 — Community</div>
+          <h2>Stay in the Loop</h2>
+          <p class="loop-intro">
+            The ecosystem is still evolving.<br><br>
+            If you're interested in festival safety, harm-reduction research, or the future of event intelligence, you can follow the development as the project grows.
+          </p>
+          <p class="loop-closing">
+            For the curious, the cautious, and the people still dancing when the lights come on.
+          </p>
+        </div>
+
+        <div class="loop-actions fade-up">
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="loop-btn">
+            <div class="loop-btn-icon">in</div>
+            <div class="loop-btn-text">
+              <div class="loop-btn-label">Follow on LinkedIn</div>
+              <div class="loop-btn-sub">Updates, research notes, and progress</div>
+            </div>
+            <div class="loop-btn-arrow">→</div>
+          </a>
+
+          <a href="mailto:hello@vicelab.io?subject=Research%20Updates" class="loop-btn">
+            <div class="loop-btn-icon">✉</div>
+            <div class="loop-btn-text">
+              <div class="loop-btn-label">Join Research Updates</div>
+              <div class="loop-btn-sub">Occasional notes on harm reduction and development</div>
+            </div>
+            <div class="loop-btn-arrow">→</div>
+          </a>
+
+          <a href="mailto:hello@vicelab.io?subject=Collaboration" class="loop-btn">
+            <div class="loop-btn-icon">◎</div>
+            <div class="loop-btn-text">
+              <div class="loop-btn-label">Connect for Collaboration</div>
+              <div class="loop-btn-sub">Organisations, researchers, and safety teams welcome</div>
+            </div>
+            <div class="loop-btn-arrow">→</div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="section-divider"></div></div>
+
+  <!-- DEVELOPMENT STATUS -->
+  <section id="status">
+    <div class="container">
+      <div class="status-grid">
+        <div class="status-text">
+          <div class="section-label">05 — Status</div>
+          <h2>Development Status</h2>
+          <div class="body-text">
+            <p>The platform is currently in development.</p>
+            <p>Early work focuses on research, prototype tools, and collaboration with organisations working in festival safety and harm-reduction.</p>
+          </div>
+          <div class="status-goal">
+            <p><strong>The goal is simple:</strong> support safer decisions, protect the community, and help festivals remain the places where people can dance, connect, and explore safely.</p>
+          </div>
+        </div>
+        <div class="signature-block">
+          <div class="sig-label">A closing note</div>
+          <div class="sig-text">
+            For festivals, raves, and nights that stretch to next light —<br>
+            with tools that help people come down <em>conscious.</em>
+          </div>
+          <div class="sig-footer">ViceLab Ecosystem · In Development · 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">Vice<span>Lab</span></div>
+        <div class="footer-note">Festival safety. Evidence first.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Hero elements trigger on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('#hero .fade-up').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 200 + i * 120);
+      });
+    });
+  </script>
+</body>
+</html>
