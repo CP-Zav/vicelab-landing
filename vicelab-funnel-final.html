@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ViceLab — Complete Funnel Assets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #00ff88; --amber: #f59e0b; --cyan: #00d4ff;
+  --bg: #060608; --surface: #0d0d12; --surface2: #13131a;
+  --border: rgba(255,255,255,0.07); --text: #e8e8f0;
+  --muted: rgba(232,232,240,0.45); --dim: rgba(232,232,240,0.22);
+  --display: 'Syne', sans-serif; --mono: 'DM Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--display);line-height:1.6;overflow-x:hidden}
+.top-nav{position:sticky;top:0;z-index:100;background:rgba(6,6,8,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.top-nav-logo{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--green)}
+.nav-links{display:flex;gap:0}
+.nav-link{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:8px 12px;border:1px solid transparent;transition:color .2s,border-color .2s}
+.nav-link:hover{color:var(--text);border-color:var(--border)}
+.page{max-width:960px;margin:0 auto;padding:48px 32px 80px}
+.section{margin-bottom:4px;border:1px solid var(--border);background:var(--surface);overflow:hidden}
+.section-header{padding:18px 28px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.section-title{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--green)}
+.section-dest{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.section-body{padding:28px}
+.copy-block{background:var(--bg);border:1px solid var(--border);padding:20px 24px;margin-bottom:12px;position:relative}
+.copy-block-label{font-family:var(--mono);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:block}
+.copy-block-label span{color:var(--amber)}
+.copy-text{font-size:14px;color:var(--text);line-height:1.75;white-space:pre-wrap;padding-right:80px}
+.copy-btn{position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--bg);background:var(--green);border:none;padding:6px 12px;cursor:pointer;transition:opacity .2s}
+.copy-btn:hover{opacity:.8}
+.copy-btn.copied{background:var(--amber)}
+.steps{list-style:none}
+.step{padding:16px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:36px 1fr;gap:16px;align-items:start}
+.step:last-child{border-bottom:none}
+.step-num{font-family:var(--mono);font-size:10px;color:var(--green);padding-top:2px}
+.step-body{font-size:14px;color:var(--muted);line-height:1.65}
+.step-body strong{color:var(--text);font-weight:600}
+.step-body code{font-family:var(--mono);font-size:12px;color:var(--cyan);background:rgba(0,212,255,0.08);padding:2px 6px}
+.sub-label{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin:24px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.intro{padding:48px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px}
+.intro-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--green);margin-bottom:16px}
+.intro h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.0;margin-bottom:14px}
+.intro p{font-size:15px;color:var(--muted);max-width:560px;line-height:1.6}
+.intro-meta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+.meta-pill{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:6px 14px}
+.html-preview{background:#fff;border:1px solid var(--border);overflow:hidden;margin-top:12px}
+.html-preview-bar{background:#1a1a1a;padding:10px 16px;display:flex;gap:8px;align-items:center}
+.html-preview-dot{width:10px;height:10px;border-radius:50%}
+.html-preview-frame{width:100%;border:none;height:640px}
+@media(max-width:700px){
+  .nav-links{display:none}
+  .copy-text{padding-right:0}
+  .copy-btn{position:static;margin-top:14px;display:block;width:100%}
+  .ct-header{padding:0 20px}
+  .page{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <span class="top-nav-logo">ViceLab — Funnel Assets</span>
+  <div class="nav-links">
+    <a class="nav-link" href="#s1">Landing</a>
+    <a class="nav-link" href="#s2">Lead Magnet</a>
+    <a class="nav-link" href="#s3">Email</a>
+    <a class="nav-link" href="#s4">Product</a>
+    <a class="nav-link" href="#s5">Setup</a>
+    <a class="nav-link" href="#s6">Content</a>
+    <a class="nav-link" href="#s7">HTML</a>
+  </div>
+</div>
+
+<div class="page">
+  <div class="intro">
+    <div class="intro-eyebrow">Complete Funnel — 7 Assets</div>
+    <h1>Copy. Paste. Launch.</h1>
+    <p>Every asset below is ready to use. No placeholders. No filler. Click Copy on each block and paste directly into MailerLite, Big Cartel, or your content tool.</p>
+    <div class="intro-meta">
+      <span class="meta-pill">MailerLite Ready</span>
+      <span class="meta-pill">Big Cartel Ready</span>
+      <span class="meta-pill">Mobile-First</span>
+      <span class="meta-pill">7 Sections</span>
+    </div>
+  </div>
+
+  <!-- 01 LANDING PAGE -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-title">01 — Landing Page</span>
+      <span class="section-dest">→ MailerLite Landing Page Builder</span>
+    </div>
+    <div class="section-body">
+      <div class="copy-block">
+        <span class="copy-block-label"><span>HEADLINE BLOCK</span> — Heading element</span>
+        <div class="copy-text">Most festival safety advice stops being useful when the night gets real.
+
+This isn't that.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>SUBHEADLINE BLOCK</span> — Paragraph element below headline</span>
+        <div class="copy-text">ViceLab makes field-tested tools for festivals and nightlife — research-informed, built for real environments, not awareness campaigns. Get the free Field Brief and see what we mean.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>BULLETS BLOCK</span> — List element</span>
+        <div class="copy-text">• Altered state awareness — what to watch for before it escalates
+• Crew signal framework — one shared language, no guesswork
+• Early escalation checklist — what to do, in what order
+• Body signal decoding — reading yourself and others accurately
+• Works with no phone signal. No app required.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>CTA TEXT</span> — Button label + form helper text</span>
+        <div class="copy-text">Get the Free Field Brief
+
+No spam. No noise. One email with something useful.
+
+Takes 30 seconds. Useful before your next event.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>TRUST STRIP</span> — Small text row below form</span>
+        <div class="copy-text">Research-informed · Peer-developed · Non-preachy · Privacy-conscious · Built for real environments</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 LEAD MAGNET -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-title">02 — Lead Magnet</span>
+      <span class="section-dest">→ Google Doc or Canva → export PDF → attach in MailerLite email</span>
+    </div>
+    <div class="section-body">
+      <div class="copy-block">
+        <span class="copy-block-label"><span>TITLE</span></span>
+        <div class="copy-text">ViceLab Field Brief
+5 Things to Know Before the Night Starts</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>INTRO LINE</span></span>
+        <div class="copy-text">This is not a safety pamphlet. It is a pre-event reference — short enough to read in five minutes, specific enough to actually use.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>SECTION 01</span></span>
+        <div class="copy-text">01 — BASELINE FIRST
+
+Before the night starts, note your actual baseline. Energy level, hydration, food, sleep deficit, any existing anxieties. Your baseline shapes how everything else lands. People who skip this lose their reference point by hour three — and have no frame for what "off" actually looks like.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>SECTION 02</span></span>
+        <div class="copy-text">02 — SET A CREW CHECK-IN SIGNAL
+
+Agree on one signal before you go in — a word, a hand gesture, a specific question. "How's the vibe?" means something different than "You good?" Use it consistently. It creates a shared language for checking in without drawing attention or interrupting the moment.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>SECTION 03</span></span>
+        <div class="copy-text">03 — KNOW THE EARLY BODY SIGNALS
+
+Altered states compress perception. The early signals of something going wrong — elevated heart rate, teeth clenching, unusual heat, reduced verbal coherence — often feel fine from the inside. They are more reliably visible from outside. Watch each other, not just yourself.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>SECTION 04</span></span>
+        <div class="copy-text">04 — AGREE ON AN ESCALATION POINT BEFORE YOU NEED ONE
+
+The question "when do we get help?" should not be answered in the moment. Set a simple threshold in advance: if X happens, we move. If someone cannot communicate clearly, we move. Clarity now removes the decision overhead when it matters most.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>SECTION 05</span></span>
+        <div class="copy-text">05 — LOCATION LOGIC
+
+Know two things before you go deep into any space: where the medic point is, and the fastest route out of the main area. This takes sixty seconds at entry. Most people never do it. In a situation requiring fast movement, those sixty seconds become the difference between a structured exit and a chaotic one.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>CLOSING + SOFT CTA</span></span>
+        <div class="copy-text">The ViceLab Field Manual goes deeper on all of the above — covering altered state awareness, body signal decoding, substance intelligence, crew communication, and emergency escalation in full.
+
+Available now at vicelab-collective.bigcartel.com</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 WELCOME EMAIL -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-title">03 — Welcome Email</span>
+      <span class="section-dest">→ MailerLite Automation — Trigger: Form Signup — Send Immediately</span>
+    </div>
+    <div class="section-body">
+      <div class="copy-block">
+        <span class="copy-block-label"><span>SUBJECT LINE</span></span>
+        <div class="copy-text">Your Field Brief is here. One more thing.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>PREVIEW TEXT</span> — shown below subject in inbox</span>
+        <div class="copy-text">5 things most crews skip before the night starts. Plus what ViceLab actually is.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>EMAIL BODY</span> — full copy, paste into MailerLite text block</span>
+        <div class="copy-text">Here's your Field Brief.
+
+[LINK TO PDF — upload to MailerLite Files or use a Google Drive view-only link]
+
+Five things to know before the night starts. Short enough to read before you leave the house. Specific enough to actually use.
+
+---
+
+A quick word on what ViceLab is — because it's not a campaign, and it's not a brand in the way most brands work.
+
+ViceLab is a harm reduction ecosystem. We build tools for festivals and nightlife environments — research-informed, field-tested, built for real situations rather than awareness posters.
+
+The Field Brief is the starting point.
+
+The Field Manual is the full system.
+
+It covers altered state awareness, body signal decoding, substance intelligence, crew communication, and emergency escalation. Compact. Waterproof. Structured for use under pressure, not just before it.
+
+This is a limited first drop. Small batch. No guaranteed restock in this format.
+
+If you've got something coming up — don't leave this to guesswork.
+
+vicelab-collective.bigcartel.com
+
+---
+
+More coming — including field content on reading environments, crew dynamics, and what real-world harm reduction actually looks like in practice.
+
+Stay sharp.
+
+ViceLab</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 PRODUCT PAGE -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-title">04 — Product Page</span>
+      <span class="section-dest">→ Big Cartel → Products → ViceLab Field Manual → Description</span>
+    </div>
+    <div class="section-body">
+      <div class="copy-block">
+        <span class="copy-block-label"><span>FULL PRODUCT DESCRIPTION</span> — paste into Big Cartel description field</span>
+        <div class="copy-text">This is not a zine. It is not theory. It is a field manual.
+
+Most festivals compress decision-making into high-intensity windows — altered states, unfamiliar environments, physical strain, crew dynamics shifting by the hour. Most people go in with guesswork. This exists to close that gap.
+
+The ViceLab Field Manual is a compact, waterproof reference guide built specifically for festival and nightlife environments. Research-informed content, structured for real-world use — not for reading at home, for using when you need it.
+
+WHAT'S INSIDE
+
+— Altered state awareness: what to watch for before it becomes a problem
+— Body signal decoding: reading yourself and others when instincts get compressed
+— Interaction risk concepts: understanding what's happening in a space accurately
+— Crew communication framework: a shared language that works in loud, high-stimulus environments
+— Emergency escalation basics: what to do, in what order, without freezing
+
+BUILT FOR REAL CONDITIONS
+
+Pocket-sized. Waterproof stock. No app required. No signal required. Designed for the environments where standard safety information stops being useful.
+
+THIS IS A LIMITED FIRST DROP
+
+Small batch production. No guaranteed restock in this format. First release only.
+
+If you're going to a festival this season — this is the version to have.
+
+You won't need it until you do.
+That's the point.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 FUNNEL SETUP -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-title">05 — Funnel Setup</span>
+      <span class="section-dest">→ Follow in order — MailerLite first, then Big Cartel</span>
+    </div>
+    <div class="section-body">
+      <div class="sub-label">MAILERLITE — Landing Page</div>
+      <ul class="steps">
+        <li class="step"><span class="step-num">01</span><div class="step-body">Go to <strong>Sites → Landing Pages → Create new</strong>. Select a blank or minimal dark template. Delete all placeholder blocks.</div></li>
+        <li class="step"><span class="step-num">02</span><div class="step-body">Add a <strong>Heading block</strong>. Paste <code>HEADLINE BLOCK</code> from Section 01.</div></li>
+        <li class="step"><span class="step-num">03</span><div class="step-body">Add a <strong>Text block</strong> below. Paste <code>SUBHEADLINE BLOCK</code>.</div></li>
+        <li class="step"><span class="step-num">04</span><div class="step-body">Add a <strong>List block</strong>. Paste <code>BULLETS BLOCK</code> — one bullet per line, remove the bullet characters.</div></li>
+        <li class="step"><span class="step-num">05</span><div class="step-body">Add a <strong>Signup Form block</strong>. Email field only. Button text: <code>Get the Free Field Brief</code>. Helper text: <code>No spam. No noise. One email with something useful.</code></div></li>
+        <li class="step"><span class="step-num">06</span><div class="step-body">Add a small <strong>Text block</strong> below form. Paste <code>TRUST STRIP</code>. Set to smallest font size, reduced opacity.</div></li>
+        <li class="step"><span class="step-num">07</span><div class="step-body">Set page background to black or near-black. Remove stock images. <strong>Publish.</strong> Copy the URL — this is your link for all content posts.</div></li>
+      </ul>
+
+      <div class="sub-label">MAILERLITE — Welcome Email Automation</div>
+      <ul class="steps">
+        <li class="step"><span class="step-num">01</span><div class="step-body">Go to <strong>Automation → Create workflow</strong>.</div></li>
+        <li class="step"><span class="step-num">02</span><div class="step-body">Trigger: <strong>When subscriber joins a group</strong> → select the group linked to your landing page form.</div></li>
+        <li class="step"><span class="step-num">03</span><div class="step-body">Add step: <strong>Send email</strong>. Paste <code>SUBJECT LINE</code>, <code>PREVIEW TEXT</code>, and <code>EMAIL BODY</code> from Section 03.</div></li>
+        <li class="step"><span class="step-num">04</span><div class="step-body">Replace <code>[LINK TO PDF]</code>: go to <strong>Files</strong> in MailerLite, upload your Field Brief PDF, copy the link, paste it in place of the placeholder. Make it a hyperlink on the text "Field Brief".</div></li>
+        <li class="step"><span class="step-num">05</span><div class="step-body">Replace the final store URL with your live Big Cartel product page URL. Set as a hyperlink.</div></li>
+        <li class="step"><span class="step-num">06</span><div class="step-body">Set send delay: <strong>Immediately</strong>. <strong>Enable workflow.</strong> Done.</div></li>
+      </ul>
+
+      <div class="sub-label">BIG CARTEL — Product Description</div>
+      <ul class="steps">
+        <li class="step"><span class="step-num">01</span><div class="step-body">Log into Big Cartel. Go to <strong>Products → ViceLab Field Manual → Edit</strong>.</div></li>
+        <li class="step"><span class="step-num">02</span><div class="step-body">Clear the existing description. Paste the full <code>PRODUCT DESCRIPTION</code> from Section 04.</div></li>
+        <li class="step"><span class="step-num">03</span><div class="step-body"><strong>Save.</strong> Copy the direct product URL — use this in emails and posts wherever you reference the Manual specifically.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 06 CONTENT LOOP -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-title">06 — Content Loop</span>
+      <span class="section-dest">→ LinkedIn / Instagram / Threads — Daily or 3× per week</span>
+    </div>
+    <div class="section-body">
+      <div class="copy-block">
+        <span class="copy-block-label"><span>POST TEMPLATE</span> — use this structure every time</span>
+        <div class="copy-text">[HOOK — one line, no context needed, stop the scroll]
+
+[2–3 lines of specific, grounded insight. No padding. No moralising.]
+
+[One line that makes ViceLab the logical next step.]
+
+→ [your landing page URL]</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>HOOK FORMULAS</span> — rotate, never repeat the same twice in a row</span>
+        <div class="copy-text">CONTRAST: "Most people [common behaviour]. The ones who [better outcome] do this instead."
+
+SPECIFIC TRUTH: "By hour four of a festival, [specific thing] has usually already happened. Most crews don't notice until [consequence]."
+
+REFRAME: "[Common belief] sounds right. It doesn't hold in [specific real-world condition]."
+
+DIRECT OBSERVATION: "One thing nobody talks about at festivals: [specific insight]. It matters more than most people realise."</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>5 READY-TO-POST EXAMPLES</span> — replace URL with your MailerLite landing page</span>
+        <div class="copy-text">POST 1
+Most festival safety advice was written for a poster, not for the moment.
+
+It's specific enough to print. Not specific enough to use when you're four hours in, the bass is at 130BPM, and someone in your crew isn't right.
+
+ViceLab is built for that gap.
+
+→ [your landing page URL]
+
+---
+
+POST 2
+The early signals of a bad night are visible before they're felt.
+
+Elevated heart rate that reads as excitement. Heat that reads as dancing. Reduced coherence that reads as vibes. They look fine from the inside. They're visible from outside.
+
+That's why crew awareness is a skill, not just an instinct.
+
+→ [your landing page URL]
+
+---
+
+POST 3
+"We'll figure it out if something happens" is a plan built on the assumption that you'll be capable of figuring it out when it does.
+
+That assumption breaks down faster than people expect.
+
+The Field Brief covers what to set before the night starts. Free.
+
+→ [your landing page URL]
+
+---
+
+POST 4
+One thing that changes everything at a festival: a shared crew signal.
+
+Not a check-in app. Not a group chat. One agreed word or gesture that means "I need a minute away from this." Simple. Works in any environment. Takes ten seconds to agree on before you go in.
+
+More like this in the free ViceLab Field Brief.
+
+→ [your landing page URL]
+
+---
+
+POST 5
+There's a version of harm reduction that talks to you like an adult.
+
+No guilt. No lectures. No awareness campaigns. Just dense, specific, field-tested information for environments where the margin for error is narrower than most people account for.
+
+That's what ViceLab makes.
+
+→ [your landing page URL]</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+      <div class="copy-block">
+        <span class="copy-block-label"><span>DAILY WORKFLOW</span> — 15 minutes max</span>
+        <div class="copy-text">1. Pick one Hook Formula
+2. Write 2–3 lines of specific real-world insight
+3. Add one line connecting it to ViceLab / the Field Brief
+4. Add your landing page URL
+5. Post to LinkedIn and IG/Threads simultaneously
+6. Done. Repeat tomorrow.</div>
+        <button class="copy-btn" onclick="cp(this)">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 HTML LANDING PAGE -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-title">07 — Clean HTML Landing Page</span>
+      <span class="section-dest">→ GitHub Pages / MailerLite custom HTML / any HTML editor</span>
+    </div>
+    <div class="section-body">
+      <div class="copy-block">
+        <span class="copy-block-label"><span>FULL HTML</span> — self-contained, mobile-first. Replace YOUR_MAILERLITE_FORM_ACTION_URL with your MailerLite embed action URL.</span>
+        <button class="copy-btn" id="html-btn" onclick="cpHTML()">Copy HTML</button>
+      </div>
+      <div class="html-preview">
+        <div class="html-preview-bar">
+          <div class="html-preview-dot" style="background:#ff5f57"></div>
+          <div class="html-preview-dot" style="background:#febc2e"></div>
+          <div class="html-preview-dot" style="background:#28c840"></div>
+        </div>
+        <iframe class="html-preview-frame" id="preview"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page -->
+
+<script>
+// ── Copy button for text blocks ──
+function cp(btn) {
+  var text = btn.closest('.copy-block').querySelector('.copy-text').innerText;
+  navigator.clipboard.writeText(text).then(function () {
+    btn.textContent = 'Copied';
+    btn.classList.add('copied');
+    setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+// ── HTML landing page stored as template literal ──
+// Apostrophes are safe inside backtick strings; only backticks inside need escaping
+var landingHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ViceLab \u2014 Free Field Brief</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#060608;color:#e8e8f0;font-family:-apple-system,'Helvetica Neue',sans-serif;line-height:1.6}
+.page{max-width:580px;margin:0 auto;padding:56px 24px 80px}
+.logo{font-family:monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#00ff88;display:block;margin-bottom:48px}
+h1{font-size:clamp(32px,8vw,50px);font-weight:800;line-height:1.05;letter-spacing:-.025em;margin-bottom:20px}
+.sub{font-size:16px;color:rgba(232,232,240,.55);margin-bottom:36px;line-height:1.65}
+.bullets{list-style:none;margin-bottom:36px;border-top:1px solid rgba(255,255,255,.07)}
+.bullets li{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px;color:rgba(232,232,240,.65);display:flex;align-items:flex-start;gap:12px}
+.bullets li::before{content:'';display:block;width:5px;height:5px;background:#00ff88;border-radius:50%;flex-shrink:0;margin-top:8px}
+input[type=email]{width:100%;padding:14px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#e8e8f0;font-size:15px;margin-bottom:10px;outline:none;-webkit-appearance:none;border-radius:0}
+input[type=email]::placeholder{color:rgba(232,232,240,.3)}
+input[type=email]:focus{border-color:#00ff88}
+button[type=submit]{width:100%;padding:16px;background:#00ff88;color:#060608;border:none;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;-webkit-appearance:none;border-radius:0}
+.note{font-size:11px;color:rgba(232,232,240,.3);text-align:center;margin-top:10px;letter-spacing:.05em}
+.trust{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.07);font-size:11px;color:rgba(232,232,240,.22);letter-spacing:.07em;line-height:2;text-align:center}
+</style>
+</head>
+<body>
+<div class="page">
+<span class="logo">ViceLab</span>
+<h1>Most festival safety advice stops being useful when the night gets real. This isn't that.</h1>
+<p class="sub">ViceLab makes field-tested tools for festivals and nightlife \u2014 research-informed, built for real environments, not awareness campaigns. Get the free Field Brief and see what we mean.</p>
+<ul class="bullets">
+<li>Altered state awareness \u2014 what to watch for before it escalates</li>
+<li>Crew signal framework \u2014 one shared language, no guesswork</li>
+<li>Early escalation checklist \u2014 what to do, in what order</li>
+<li>Body signal decoding \u2014 reading yourself and others accurately</li>
+<li>Works with no phone signal. No app required.</li>
+</ul>
+<form action="YOUR_MAILERLITE_FORM_ACTION_URL" method="POST">
+<input type="email" name="email" placeholder="Your email address" required>
+<button type="submit">Get the Free Field Brief</button>
+</form>
+<p class="note">No spam. No noise. One email with something useful.</p>
+<p class="note" style="margin-top:6px;color:rgba(232,232,240,.22)">Takes 30 seconds. Useful before your next event.</p>
+<div class="trust">Research-informed &nbsp;\u00b7&nbsp; Peer-developed &nbsp;\u00b7&nbsp; Non-preachy &nbsp;\u00b7&nbsp; Privacy-conscious &nbsp;\u00b7&nbsp; Built for real environments</div>
+</div>
+</body>
+</html>`;
+
+// Inject preview
+document.getElementById('preview').srcdoc = landingHTML;
+
+// Copy HTML button
+function cpHTML() {
+  navigator.clipboard.writeText(landingHTML).then(function () {
+    var btn = document.getElementById('html-btn');
+    btn.textContent = 'Copied';
+    btn.classList.add('copied');
+    setTimeout(function () { btn.textContent = 'Copy HTML'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+</script>
+</body>
+</html>
